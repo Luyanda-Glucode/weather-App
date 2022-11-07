@@ -6,13 +6,16 @@
 //
 
 import UIKit
-
+import Resolver
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    @Injected var viewModel: WeatherViewModel
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        getWeather()
     }
     
     private func setupTableView() {
@@ -20,6 +23,10 @@ class ViewController: UIViewController {
         tableView.delegate = self
         
         tableView.register(UINib(nibName: "CitiesTableViewCell", bundle: nil), forCellReuseIdentifier: "CitiesTableViewCell")
+    }
+    
+    private func getWeather() {
+        viewModel.getWeather()
     }
 }
 
