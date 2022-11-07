@@ -11,7 +11,6 @@ typealias Response = WeatherResponse
 struct WeatherRequest: Request {
    
     var method: HTTPMethod { .GET }
-   // var path: String { Constants.http.pathMovies }
     var additionalHeaders: [String : String] { [:] }
     var body: Data? { nil }
     var parameters: [String:String]? { nil}

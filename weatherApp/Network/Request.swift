@@ -15,9 +15,7 @@ import Foundation
 
 protocol Request {
     associatedtype response
-    
     var method: HTTPMethod { get }
-   // var path: String { get }
     var body: Data? { get }
     
     func handle(response: Data) throws -> response
