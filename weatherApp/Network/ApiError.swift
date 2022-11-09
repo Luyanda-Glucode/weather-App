@@ -1,15 +1,8 @@
-//
-//  ApiError.swift
-//  weatherApp
-//
-//  Created by Luyanda Sikithi on 2022/11/04.
-//
-
 import Foundation
 
 enum APIError: Error {
     case requestFailed(Int)
-    case noMoviesFound
+    case noWeatherResponse
 }
 
 extension APIError: LocalizedError {
@@ -17,7 +10,7 @@ extension APIError: LocalizedError {
         switch self {
         case .requestFailed(_):
             return  Constants.failedRequest
-        case .noMoviesFound:
+        case .noWeatherResponse:
             return Constants.noWeatherResponse
         }
     }

@@ -1,25 +1,20 @@
-//
-//  WeatherViewModel.swift
-//  weatherApp
-//
-//  Created by Luyanda Sikithi on 2022/11/04.
-//
-
 import Foundation
-import Resolver
+import Combine
 class WeatherViewModel {
     
     private let client = Client()
-    private var weather: WeatherResponse?
-    @Injected var repository: WeatherRepository
+    var weather: WeatherResponse?
+    var repository = WeatherRepository()
+    @Published var state = WeatherViewModelState.idle
     
     func getWeather(){
         repository.getWeather(completionState: { results in
             switch results {
-            case .finished: print("finfished")
-            case.failure(let error): print("show error \(error.localizedDescription)")
+            case .finished: self.state = .loaded
+            case.failure(let error):self.state = .error(error)
             }
         }, recievedValue: { [self] response in
+            dump(response.data)
             weather = response
         })
     }

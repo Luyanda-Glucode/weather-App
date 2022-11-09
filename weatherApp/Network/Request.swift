@@ -1,10 +1,3 @@
-//
-//  Request.swift
-//  weatherApp
-//
-//  Created by Luyanda Sikithi on 2022/11/04.
-//
-
 import Foundation
 @frozen enum HTTPMethod: String {
     case GET

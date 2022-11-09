@@ -1,10 +1,3 @@
-//
-//  WeatherResponse.swift
-//  weatherApp
-//
-//  Created by Luyanda Sikithi on 2022/11/04.
-//
-
 import Foundation
 
 struct WeatherResponse: Codable {
@@ -32,7 +25,7 @@ struct CurrentConditions: Codable {
 
 struct Weather: Codable {
     var date: String?
-    var hourly: String?
+    var hourly: [Hourly]?
 }
 struct Hourly: Codable {
     var time: String?

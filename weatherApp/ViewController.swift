@@ -1,19 +1,17 @@
-//
-//  ViewController.swift
-//  weatherApp
-//
-//  Created by Luyanda Sikithi on 2022/11/02.
-//
-
 import UIKit
-import Resolver
+import Combine
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var temparatureLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     
-    @Injected var viewModel: WeatherViewModel
+    private var cancelable: AnyCancellable?
+    var viewModel = WeatherViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.showActivityIndicator()
         setupTableView()
         getWeather()
     }
@@ -26,7 +24,58 @@ class ViewController: UIViewController {
     }
     
     private func getWeather() {
-        viewModel.getWeather()
+        DispatchQueue.main.async { [self] in
+            viewModel.getWeather()
+            viewModelStateBinding()
+        }
+    }
+    
+    private func showValues() {
+        guard let currentConditions = viewModel.weather?.data?.current_condition, let weather = viewModel.weather?.data?.weather else { return }
+        for items in currentConditions {
+            guard let temp = items.temp_C, let temperature = Double(temp) else { return }
+            
+           getTemparature(temperature, temparatureLabel)
+            
+            guard let description = items.weatherDesc else { return }
+            for desc in description {
+                descriptionLabel.text = desc.value
+            }
+        }
+        
+        for date in weather {
+            dateLabel.text = date.date
+        }
+    }
+    
+    private func viewModelStateBinding() {
+        self.cancelable = viewModel.$state.receive(on: DispatchQueue.main).sink { [weak self] state in
+            self?.view.hideActivityIndicator()
+            switch state {
+            case .idle: break
+            case .loading:
+                self?.view.showActivityIndicator()
+            case .loaded:
+                self?.showValues()
+            case .error(let error):
+                print("show error \(error.localizedDescription)")
+            }
+            
+        }
+    }
+    
+    func navigateToDetailsScreen(from navigationController: UINavigationController?, weather: WeatherResponse) {
+    let weatherDetails = Detailed7DaysViewController(weather: weather)
+    self.navigationController?.pushViewController(weatherDetails, animated: true)
+    }
+
+    
+    @IBAction func Details(_ sender: Any) {
+        if let data = viewModel.weather {
+            navigateToDetailsScreen(from: navigationController, weather: data)
+        }else{
+            print("Response model is empty.")
+        }
     }
 }
 
@@ -63,5 +112,17 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         }else if indexPath.row == 3 {
             title = "New York"
         }
+    }
+}
+extension ViewController {
+    private func getTemparature(_ temperature: Double,_ tempLabel: UILabel) {
+        let measurement = Measurement(value: temperature, unit: UnitTemperature.celsius)
+
+        let measurementFormatter = MeasurementFormatter()
+        measurementFormatter.unitStyle = .short
+        measurementFormatter.numberFormatter.maximumFractionDigits = 0
+        measurementFormatter.unitOptions = .temperatureWithoutUnit
+
+        tempLabel.text = measurementFormatter.string(from: measurement)
     }
 }

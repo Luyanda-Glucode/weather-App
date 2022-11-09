@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ryv-G0-FOK">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -36,6 +37,9 @@
                                 <rect key="frame" x="28" y="339" width="334" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="See Datails"/>
+                                <connections>
+                                    <action selector="Details:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YU8-Pd-lgH"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Partly Cloudy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9zI-hy-u3b">
                                 <rect key="frame" x="28" y="288" width="334" height="21"/>
@@ -83,12 +87,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="dateLabel" destination="0OR-Te-6yh" id="6db-a1-W1r"/>
+                        <outlet property="descriptionLabel" destination="9zI-hy-u3b" id="BMG-Sz-g4k"/>
                         <outlet property="tableView" destination="0HV-vR-6hC" id="HdY-fd-VYx"/>
+                        <outlet property="temparatureLabel" destination="QFf-fX-sfZ" id="pnO-up-dQR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="950.76923076923072" y="3.5545023696682461"/>
+            <point key="canvasLocation" x="880" y="-63"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="y1B-xU-uAg">

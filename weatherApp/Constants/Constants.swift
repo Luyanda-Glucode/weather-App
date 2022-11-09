@@ -1,10 +1,3 @@
-//
-//  Constants.swift
-//  weatherApp
-//
-//  Created by Luyanda Sikithi on 2022/11/04.
-//
-
 import Foundation
 struct Constants {
     static let baseUrl = "https://api.worldweatheronline.com/premium/v1/weather.ashx?q=Pretoria&format=json&num_of_days=5&key=a9eb9caa265947d790962927220211"
