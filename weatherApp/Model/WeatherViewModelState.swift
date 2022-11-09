@@ -1,8 +1,8 @@
-//
-//  WeatherViewModelState.swift
-//  weatherApp
-//
-//  Created by Luyanda Sikithi on 2022/11/08.
-//
-
 import Foundation
+enum WeatherViewModelState {
+    case idle
+    case loading
+    case loaded
+    case error(Error)
+}
+
