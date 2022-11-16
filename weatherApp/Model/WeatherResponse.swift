@@ -25,12 +25,14 @@ struct CurrentConditions: Codable {
 
 struct Weather: Codable {
     var date: String?
+    var maxtempC: String?
+    var mintempC: String?
     var hourly: [Hourly]?
 }
 struct Hourly: Codable {
     var time: String?
-    var temp_C: String?
-    var temp_F: String?
+    var tempC: String?
+    var tempF: String?
     var weatherIconUrl: [WeatherUrl]?
     var weatherDesc: [WeatherDesc]?
 }

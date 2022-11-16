@@ -2,15 +2,13 @@ import Foundation
 import Combine
 struct Client {
     private let urlSession: URLSession
-    private let environment: Environment
     
-    init(urlSession: URLSession = .shared, environment: Environment = .development) {
+    init(urlSession: URLSession = .shared) {
         self.urlSession = urlSession
-        self.environment = environment
     }
     
-    func publisherForRequest<RequestType: Request>(_ request: RequestType) -> AnyPublisher<RequestType.response, Error> {
-        let url = environment.baseUrl
+    func publisherForRequest<RequestType: Request>(_ request: RequestType,_ url: String) -> AnyPublisher<RequestType.response, Error> {
+        let url = URL(string: url)!
         
         var urlRequest = URLRequest(url: url)
         urlRequest.url = URL(string: urlRequest.url?.absoluteString.removingPercentEncoding ?? "")

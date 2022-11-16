@@ -7,8 +7,8 @@ class WeatherViewModel {
     var repository = WeatherRepository()
     @Published var state = WeatherViewModelState.idle
     
-    func getWeather(){
-        repository.getWeather(completionState: { results in
+    func getWeather(_ url: String){
+        repository.getWeather(url, completionState: { results in
             switch results {
             case .finished: self.state = .loaded
             case.failure(let error):self.state = .error(error)

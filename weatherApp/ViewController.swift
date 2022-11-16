@@ -9,33 +9,46 @@ class ViewController: UIViewController {
     
     private var cancelable: AnyCancellable?
     var viewModel = WeatherViewModel()
+    var current: [CurrentConditions]?
+    var city = ["Pretoria","London","Barcelona","New York"]
     override func viewDidLoad() {
         super.viewDidLoad()
         view.showActivityIndicator()
-        setupTableView()
-        getWeather()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setupTableView()
+        getWeather(Constants.baseUrl)
+        
+    }
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        
         tableView.register(UINib(nibName: "CitiesTableViewCell", bundle: nil), forCellReuseIdentifier: "CitiesTableViewCell")
+        //tableView.register(UINib(nibName: String(describing: CitiesTableViewCell.self, bundle: nil)))
     }
     
-    private func getWeather() {
+    private func getWeather(_ url: String) {
         DispatchQueue.main.async { [self] in
-            viewModel.getWeather()
+            viewModel.getWeather(url)
             viewModelStateBinding()
         }
     }
     
     private func showValues() {
-        guard let currentConditions = viewModel.weather?.data?.current_condition, let weather = viewModel.weather?.data?.weather else { return }
+        guard let city = viewModel.weather?.data?.request?[0].query else { return }
+        if let first = city.components(separatedBy: ",").first {
+            title = first
+        }
+        
+        guard let currentConditions = viewModel.weather?.data?.current_condition,
+            let weather = viewModel.weather?.data?.weather else { return }
+        current = currentConditions
         for items in currentConditions {
             guard let temp = items.temp_C, let temperature = Double(temp) else { return }
             
-           getTemparature(temperature, temparatureLabel)
+            view.getTemparature(temperature, temparatureLabel)
             
             guard let description = items.weatherDesc else { return }
             for desc in description {
@@ -44,7 +57,8 @@ class ViewController: UIViewController {
         }
         
         for date in weather {
-            dateLabel.text = date.date
+            guard let day = date.date else { return }
+            dateLabel.text = String().getDay(day)
         }
     }
     
@@ -57,6 +71,7 @@ class ViewController: UIViewController {
                 self?.view.showActivityIndicator()
             case .loaded:
                 self?.showValues()
+                self?.tableView.reloadData()
             case .error(let error):
                 print("show error \(error.localizedDescription)")
             }
@@ -65,10 +80,50 @@ class ViewController: UIViewController {
     }
     
     func navigateToDetailsScreen(from navigationController: UINavigationController?, weather: WeatherResponse) {
-    let weatherDetails = Detailed7DaysViewController(weather: weather)
-    self.navigationController?.pushViewController(weatherDetails, animated: true)
+        let weatherDetails = Detailed7DaysViewController(weather: weather)
+        self.navigationController?.pushViewController(weatherDetails, animated: true)
     }
 
+    @IBAction func addNewCity(_ sender: Any) {
+        let alertController = UIAlertController(title: "Add City", message: "", preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: "Save", style: .default, handler: { alert -> Void in
+            if let city = alertController.textFields?.first?.text {
+
+                 self.city.append(city)
+                self.tableView.reloadData()
+            }
+            })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
+                (action : UIAlertAction!) -> Void in })
+        alertController.addTextField { (textField : UITextField!) -> Void in
+                textField.placeholder = "Enter City Name"
+            }
+            
+            alertController.addAction(saveAction)
+            alertController.addAction(cancelAction)
+     
+        self.present(alertController, animated: true)
+    }
+    @IBAction func searchCity(_ sender: Any) {
+        let alertController = UIAlertController(title: "Search City", message: "", preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: "Search", style: .default, handler: { [self] alert -> Void in
+            if let cityName = alertController.textFields?.first?.text {
+                   let filtered = city.filter {$0.contains(cityName) }
+                    city = filtered
+                    tableView.reloadData()
+            }
+            })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
+                (action : UIAlertAction!) -> Void in })
+        alertController.addTextField { (textField : UITextField!) -> Void in
+                textField.placeholder = "Enter City Name"
+            }
+            
+            alertController.addAction(saveAction)
+            alertController.addAction(cancelAction)
+     
+        self.present(alertController, animated: true)
+    }
     
     @IBAction func Details(_ sender: Any) {
         if let data = viewModel.weather {
@@ -81,48 +136,30 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return city.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CitiesTableViewCell", for: indexPath) as? CitiesTableViewCell else { return UITableViewCell() }
-        if indexPath.row == 0 {
-            cell.cityLbl.text = "Pretoria"
-            cell.countryLbl.text = "South Africa"
-        }else if indexPath.row == 1 {
-            cell.cityLbl.text = "London"
-            cell.countryLbl.text = "United Kindom"
-        }else if indexPath.row == 2 {
-            cell.cityLbl.text = "Barcelona"
-            cell.countryLbl.text = "Europe"
-        }else if indexPath.row == 3 {
-            cell.cityLbl.text = "New York"
-            cell.countryLbl.text = "America"
-        }
+        let replaced = city[indexPath.row].replacingOccurrences(of: "+", with: " ")
+        cell.cityLbl.text = replaced
+        
+        cell.cities = city
+        cell.index = indexPath.row
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            title = "Pretoria"
-        }else if indexPath.row == 1 {
-            title = "London"
-        }else if indexPath.row == 2 {
-            title = "Barcelona"
-        }else if indexPath.row == 3 {
-            title = "New York"
-        }
-    }
-}
-extension ViewController {
-    private func getTemparature(_ temperature: Double,_ tempLabel: UILabel) {
-        let measurement = Measurement(value: temperature, unit: UnitTemperature.celsius)
-
-        let measurementFormatter = MeasurementFormatter()
-        measurementFormatter.unitStyle = .short
-        measurementFormatter.numberFormatter.maximumFractionDigits = 0
-        measurementFormatter.unitOptions = .temperatureWithoutUnit
-
-        tempLabel.text = measurementFormatter.string(from: measurement)
+        let stringTest = Constants.baseUrl
+        var cityName = ""
+        if city[indexPath.row].contains(" "){
+            cityName = city[indexPath.row].replacingOccurrences(of: " ", with: "+")
+            }else{
+                cityName = city[indexPath.row]
+            }
+        let replaced = stringTest.replacingOccurrences(of: "Pretoria", with: cityName)
+        getWeather(replaced)
+        
+        title = cityName
     }
 }

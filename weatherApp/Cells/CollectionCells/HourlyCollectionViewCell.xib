@@ -20,7 +20,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="frc-l7-9GB">
                         <rect key="frame" x="14" y="20" width="44" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon" translatesAutoresizingMaskIntoConstraints="NO" id="6fM-Lc-2FB">
@@ -33,7 +33,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ae8-OE-JUt">
                         <rect key="frame" x="17" y="90" width="36" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -52,6 +52,11 @@
                 <constraint firstAttribute="trailing" secondItem="Ae8-OE-JUt" secondAttribute="trailing" constant="18" id="rVs-jd-8hw"/>
             </constraints>
             <size key="customSize" width="71" height="120"/>
+            <connections>
+                <outlet property="hourlyLabel" destination="frc-l7-9GB" id="5sQ-np-KfZ"/>
+                <outlet property="maxTemperatureLabel" destination="Ae8-OE-JUt" id="LO6-b5-25J"/>
+                <outlet property="weatherImage" destination="6fM-Lc-2FB" id="QeZ-tV-YXS"/>
+            </connections>
             <point key="canvasLocation" x="3.8461538461538458" y="45.497630331753555"/>
         </collectionViewCell>
     </objects>

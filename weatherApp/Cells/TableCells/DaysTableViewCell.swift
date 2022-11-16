@@ -1,16 +1,22 @@
 import UIKit
-
+struct ConfigCell {
+    var day: String?
+    var min: Double?
+    var max: Double?
+}
 class DaysTableViewCell: UITableViewCell {
-
+    @IBOutlet private weak var dayLabel: UILabel!
+    @IBOutlet private weak var minTeperatureLabel: UILabel!
+    @IBOutlet private weak var maxTemperatureLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        displayData(ConfigCell())
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    func displayData(_ config: ConfigCell) {
+        dayLabel.text = config.day
+        getTemparature(config.max ?? 0.0, maxTemperatureLabel)
+        getTemparature(config.min ?? 0.0, minTeperatureLabel)
     }
-    
 }

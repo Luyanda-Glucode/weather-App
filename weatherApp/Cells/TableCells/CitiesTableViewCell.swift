@@ -10,16 +10,14 @@ import UIKit
 class CitiesTableViewCell: UITableViewCell {
 
     @IBOutlet weak var cityLbl: UILabel!
-    @IBOutlet weak var countryLbl: UILabel!
+    var cities = [String]()
+    var index = 0
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    @IBAction func removeCity(_ sender: Any) {
+        cities.remove(at: index)
     }
-    
 }
