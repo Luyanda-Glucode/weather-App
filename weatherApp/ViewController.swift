@@ -25,8 +25,7 @@ class ViewController: UIViewController {
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UINib(nibName: "CitiesTableViewCell", bundle: nil), forCellReuseIdentifier: "CitiesTableViewCell")
-        //tableView.register(UINib(nibName: String(describing: CitiesTableViewCell.self, bundle: nil)))
+        tableView.register(UINib(nibName: String(describing: CitiesTableViewCell.self), bundle: nil), forCellReuseIdentifier: "CitiesTableViewCell")
     }
     
     private func getWeather(_ url: String) {

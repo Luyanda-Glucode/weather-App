@@ -32,8 +32,8 @@ class Detailed7DaysViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
-        collectionView.register(UINib(nibName: "HourlyCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "HourlyCollectionViewCell")
-        tableView.register(UINib(nibName: "DaysTableViewCell", bundle: nil), forCellReuseIdentifier: "DaysTableViewCell")
+        collectionView.register(UINib(nibName: String(describing: HourlyCollectionViewCell.self), bundle: nil), forCellWithReuseIdentifier: "HourlyCollectionViewCell")
+        tableView.register(UINib(nibName: String(describing: DaysTableViewCell.self), bundle: nil), forCellReuseIdentifier: "DaysTableViewCell")
         
         collectionView.layer.cornerRadius = 12.0
         collectionView.clipsToBounds = true
