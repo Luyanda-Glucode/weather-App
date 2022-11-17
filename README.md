@@ -1,1 +1,11 @@
 # weather-App
+![Simulator Screen Shot - iPhone 14 Pro - 2022-11-17 at 09 28 06](https://user-images.githubusercontent.com/117176161/202383440-f2d01cbf-97b1-45c7-bf6b-e3007b972c6a.png)
+![Simulator Screen Shot - iPhone 14 Pro - 2022-11-17 at 09 28 14](https://user-images.githubusercontent.com/117176161/202383525-87d209a2-0c9e-458b-a5e1-bad2ee73dfe1.png)
+![Simulator Screen Shot - iPhone 14 Pro - 2022-11-17 at 09 28 27](https://user-images.githubusercontent.com/117176161/202383555-555b790a-4af0-4092-8f97-0ff4317003bb.png)
+![Simulator Screen Shot - iPhone 14 Pro - 2022-11-17 at 09 28 35](https://user-images.githubusercontent.com/117176161/202383611-388e28bc-3a8b-49df-82f4-d3fa0c775217.png)
+![Simulator Screen Shot - iPhone 14 Pro - 2022-11-17 at 09 29 06](https://user-images.githubusercontent.com/117176161/202383638-125e625d-9a93-43fa-803b-43a3dcd9df2f.png)
+![Simulator Screen Shot - iPhone 14 Pro - 2022-11-17 at 09 29 09](https://user-images.githubusercontent.com/117176161/202383668-59906cfb-1d8e-4074-8704-cc44a99d05d6.png)
+![Simulator Screen Shot - iPhone 14 Pro - 2022-11-17 at 09 29 15](https://user-images.githubusercontent.com/117176161/202383703-e9b1e5f5-1429-4354-b794-bd393cfafb5d.png)
+![Simulator Screen Shot - iPhone 14 Pro - 2022-11-17 at 09 28 40](https://user-images.githubusercontent.com/117176161/202383739-449f42bb-4020-45a3-a104-0650f5aa4039.png)
+![Simulator Screen Shot - iPhone 14 Pro - 2022-11-17 at 09 28 54](https://user-images.githubusercontent.com/117176161/202383750-f51e9efc-12d7-4fe3-8529-7f949ba3be73.png)
+![Simulator Screen Shot - iPhone 14 Pro - 2022-11-17 at 09 29 00](https://user-images.githubusercontent.com/117176161/202383770-d682b5cd-9943-40b9-afae-e85c9e56dd17.png)
